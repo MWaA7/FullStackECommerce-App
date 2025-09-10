@@ -6,9 +6,13 @@ import {
   updateProduct,
   deleteProduct,
 } from "./productController";
-import { validateData } from "../../middleware/validationMiddleware";
+import { validateData } from "../../middleware/validationMiddleware.js";
 
-import { createProductSchema, updateProductSchema } from "../../db/productsSchema";
+import {
+  createProductSchema,
+  updateProductSchema,
+} from "../../db/productsSchema";
+import { verifySeller, verifyToken } from "../../middleware/authMiddleware.js";
 
 const router = Router();
 
@@ -16,10 +20,22 @@ router.get("/", listProduct);
 
 router.get("/:id", getProductById);
 
-router.post("/", validateData(createProductSchema), createProduct);
+router.post(
+  "/",
+  verifyToken,
+  verifySeller,
+  validateData(createProductSchema),
+  createProduct
+);
 
-router.put("/:id", validateData(updateProductSchema), updateProduct);
+router.put(
+  "/:id",
+  verifyToken,
+  verifySeller,
+  validateData(updateProductSchema),
+  updateProduct
+);
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", verifyToken, verifySeller, deleteProduct);
 
 export default router;
