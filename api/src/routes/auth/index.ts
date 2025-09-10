@@ -3,10 +3,10 @@ import {
   createUserSchema,
   loginUserSchema,
   usersTable,
-} from "../../db/usersSchema";
-import { validateData } from "../../middleware/validationMiddleware";
+} from "../../db/usersSchema.js";
+import { validateData } from "../../middleware/validationMiddleware.js";
 import bcrypt from "bcryptjs";
-import { db } from "../../db";
+import { db } from "../../db/index.js";
 import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 
@@ -43,7 +43,7 @@ router.post("/login", validateData(loginUserSchema), async (req, res) => {
     }
 
     const matched = await bcrypt.compare(password, user.password);
-    
+
     if (!matched) {
       res.status(401).json({ error: "Authentication failed" });
       return;
