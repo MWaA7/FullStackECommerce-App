@@ -22,6 +22,20 @@
       "when": 1757527571729,
       "tag": "0002_perfect_boom_boom",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1757590715800,
+      "tag": "0003_sparkling_sphinx",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1757597753128,
+      "tag": "0004_deep_victor_mancha",
+      "breakpoints": true
     }
   ]
 }
