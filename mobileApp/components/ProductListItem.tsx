@@ -14,7 +14,7 @@ export default function ProductListItem({ product }: any) {
         <Card className="p-5 rounded-lg flex-1">
           <Image
             source={{
-              uri: product.image,
+              uri: product.url,
             }}
             className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
             alt="image"

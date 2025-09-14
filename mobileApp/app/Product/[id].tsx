@@ -1,27 +1,50 @@
 import React from "react";
 import { Text } from "@/components/ui/text";
 import { Stack, useLocalSearchParams } from "expo-router";
-import products from "@/assets/products.json";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Image } from "@/components/ui/image";
 import { VStack } from "@/components/ui/vstack";
 import { Card } from "@/components/ui/card";
+import { getProductByID } from "@/api/products";
+import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native";
 
 export default function ProductDetailsScreen() {
   const { id } = useLocalSearchParams();
-  const product = products.find((p) => p.id === Number(id));
-  if (!product) {
-    return <Text>Product Not Found </Text>;
+
+  const { data: product, isLoading, error } = useQuery({
+    queryKey: ["products", id],
+    queryFn: () => getProductByID(Number(id)),
+  });
+
+  if (!isLoading) {
+    return <ActivityIndicator className="max-h-[960px] h-full" />;
   }
+
+  if (error) {
+    return (
+      <Text
+        style={{
+          textAlign: "center",
+          alignSelf: "center",
+          marginTop: "80%",
+          fontWeight: "bold",
+        }}
+      >
+        Product Not Found !!!
+      </Text>
+    );
+  }
+
   return (
     <Box className="flex-1 items-center p3">
       <Stack.Screen name="product/[id]" options={{ title: product.name }} />
       <Card className="p-5 rounded-lg max-w-[960px] w-full flex-1">
         <Image
           source={{
-            uri: product.image,
+            uri: product.url,
           }}
           className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
           alt="image"
