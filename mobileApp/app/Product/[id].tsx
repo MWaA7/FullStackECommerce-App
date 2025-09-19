@@ -19,7 +19,7 @@ export default function ProductDetailsScreen() {
     queryFn: () => getProductByID(Number(id)),
   });
 
-  if (!isLoading) {
+  if (isLoading) {
     return <ActivityIndicator className="max-h-[960px] h-full" />;
   }
 
